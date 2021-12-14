@@ -1777,6 +1777,22 @@ def a_json_endpoint():
         }
     )
 
+@app.route("/env/<key>", methods=["GET"])
+def the_environment(key):
+    """Returns a specific key:value in the env of the server process.
+    ---
+    tags:
+      - Response formats
+    produces:
+      - text/plain
+    responses:
+      200:
+        description: Environment of the server proccess.
+    """
+    value = os.environ.get(key, 'not-found')
+    response = Response('%s: %s' % (key, value), status=200)
+    return response  
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
